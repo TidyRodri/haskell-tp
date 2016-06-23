@@ -26,6 +26,7 @@ cantVersiones ArchivoVacio = 0 --no consideramos el empty file como version
 cantVersiones (NuevaVersion _ file) = 1 + cantVersiones file
 
 --calcado del algo del pddf
+--no sé si puedo usar minimum, sino hacer min a (min b c)
 levenshtein :: String -> String -> Integer
 levenshtein str1 str2 | (min (len str1) (len str2)) == 0 = max (len str1) (len str2)
                       | (last str1) == (last str2)       = minimum [lev1 + 1,lev1 + 1, levenshtein (init str1) (init str2)]

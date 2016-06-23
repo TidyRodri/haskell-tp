@@ -1,7 +1,7 @@
 import Data
 
 aplicarModificacion :: String -> Modificacion -> String
-aplicarModificacion1 str (Insertar index char) 
+aplicarModificacion str (Insertar index char) 
     | index > (len str) || index < 0 = error "Out of range"
     | index == (len str) = str ++ [char]
     | otherwise = aplicarModificacion (init str) (Insertar index char) ++ [last str]
@@ -17,8 +17,8 @@ aplicarModificacion str (Substituir index char)
 
 aplicarPaqueteModificaciones :: String -> PaqueteModificaciones -> String
 aplicarPaqueteModificaciones str modif  | (length modif) == 0 = str
-                                        | (length modif) == 1 = (aplicarModificacion1 str (head modif))
-                                        | otherwise = (aplicarPaqueteModificaciones (aplicarModificacion1 str (head modif)) (tail modif))
+                                        | (length modif) == 1 = (aplicarModificacion str (head modif))
+                                        | otherwise = (aplicarPaqueteModificaciones (aplicarModificacion str (head modif)) (tail modif))
                                     
 --contamos cada paquete de modificaciones
 cantVersiones :: Archivo -> Integer

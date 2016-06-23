@@ -13,3 +13,9 @@ aplicarModificacion1 str (Substituir index char)
     | index > (len str) || index < 0 = error "Out of range"
     | index == (len str) = init str ++ [char]
     | otherwise = aplicarModificacion1 (init str) (Substituir index char) ++ [last str]
+
+
+aplicarPaqueteModificaciones :: String -> PaqueteModificaciones -> String
+aplicarPaqueteModificaciones str modif  | (length modif) == 0 = str
+                                        | (length modif) == 1 = (aplicarModificacion1 str (head modif))
+                                        | otherwise = (aplicarPaqueteModificaciones (aplicarModificacion1 str (head modif)) (tail modif))

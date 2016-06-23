@@ -2,7 +2,7 @@ module Data where
 
 data Modificacion = Insertar Integer Char | Borrar Integer | Substituir Integer Char deriving (Show, Eq)
 
--- type PaqueteModificaciones = [Modificacion]
+type PaqueteModificaciones = [Modificacion]
 
 -- data Archivo = ArchivoVacio | NuevaVersion PaqueteModificaciones Archivo
 -- instance Show Archivo where

@@ -40,16 +40,19 @@ cantVersiones :: Archivo -> Integer
 cantVersiones ArchivoVacio = 0 --no consideramos el empty file como version
 cantVersiones (NuevaVersion _ file) = 1 + cantVersiones file
 
---calcado del algo del pddf
+--calcado del algo del pdf
 --no sé si puedo usar minimum, sino hacer min a (min b c)
 levenshtein :: String -> String -> Integer
 levenshtein str1 str2 | (min (len str1) (len str2)) == 0 = max (len str1) (len str2)
-                      | (last str1) == (last str2)       = minimum [lev1 + 1,lev1 + 1, levenshtein (init str1) (init str2)]
-                      | otherwise                        = minimum [lev1 + 1,lev1 + 1, levenshtein (init str1) (init str2) + 1]
+                      | (last str1) == (last str2)       = minimum [lev1 + 1,lev1 + 1, lev3]
+                      | otherwise                        = minimum [lev1 + 1,lev1 + 1, lev3 + 1]
                       where lev1 = levenshtein (init str1) str2
                             lev2 = levenshtein str1 (init str2)
+			    lev3 = levenshtein (init str1) (init str2)
 
---es como aplicar una gran modificacion, la logica es igual al del ej. 4 del parcial
-obtenerUltimaVersion :: Archivo -> String
-obtenerUltimaVersion (NuevaVersion package ArchivoVacio) =  aplicarPaqueteModificaciones "" package
-obtenerUltimaVersion (NuevaVersion package version) = aplicarPaqueteModificaciones (obtenerUltimaVersion version) package
+--se puede hacer distinto wrappeando esta funcion con otra que compare n a cantVersiones original, con esta vamos a realizar toda la recursión
+obtenerVersion :: Integer -> Archivo -> String
+obtenerVersion 0 ArchivoVacio = ""
+obtenerVersion n ArchivoVacio = error "No existe ese número de version"
+obtenerVersion n (NuevaVersion package file) | n == (cantVersiones file)+1 = obtenerUltimaVersion (NuevaVersion package file)
+					     | otherwise		   = obtenerVersion n file --hacer esto equivale a restarle uno a la cantidad de vers
